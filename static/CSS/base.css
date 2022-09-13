@@ -2,6 +2,10 @@ li{
     margin:10px;
 }
 
-.btn{
+.navbtn{
     margin:10px;
+}
+
+.error{
+    text-align:center;
 }
