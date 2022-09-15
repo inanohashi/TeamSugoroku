@@ -22,6 +22,10 @@ class picture_folder(models.Model):
         unique=True
         )
 
+    created_date = models.DateTimeField(
+        auto_now_add=True
+        )
+
     #これで管理画面にレコード名をフォルダー名で表示
     def __str__(self):
         return self.picture_folder_name
