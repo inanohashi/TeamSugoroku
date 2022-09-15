@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -10,4 +10,5 @@ urlpatterns = [
     path('sign_up/', sign_up_Class.as_view()),
     path('sign_in/', sign_in_Class.as_view()),
     path('error/', errorview),
+    path('photo_share_app/', include('photo_share_app.urls')),
 ]+ static (settings.STATIC_URL, document_root=settings.STATIC_ROOT)
