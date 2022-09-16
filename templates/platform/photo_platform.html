@@ -4,17 +4,25 @@
 {% block  css%}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'CSS/base.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/platform.css' %}">
 {% endblock %}
 
 {% block content %}
 <!-- ここの内容は継承先が記載する -->
-<h2>写真投稿プラットフォーム</h2>
 
-ここに写真を表示
+<h2>写真投稿プラットフォーム</h2><!--ここに写真ファイル名を記述-->
+
+<p>ここに写真を表示</p>
 
 <!--写真のパスをall_picturesテーブルから取得しpicture_listに代入-->
 {% for item in picture_list %}
-<img src="/image/{{ item.images }}"/>
+<div class="pictures">
+    <img src="/image/{{ item.images }}" height="200"><!--高さのみ固定-->
+    <p></p>
+    <a href="/photo_share_app/photo_delete_platform/{{ item.id }}"><!--pkにitem.idを入れて写真削除画面に遷移-->
+        画像を削除
+    </a> 
+</div>
 {% endfor %}
 
 {% endblock %}
