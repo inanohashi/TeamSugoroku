@@ -11,4 +11,5 @@ urlpatterns = [
     path('sign_in/', sign_in_Class.as_view()),
     path('error/', errorview),
     path('photo_share_app/', include('photo_share_app.urls')),
-]+ static (settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+ static (settings.STATIC_URL, document_root=settings.STATIC_ROOT)\
++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

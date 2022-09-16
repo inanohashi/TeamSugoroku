@@ -8,5 +8,13 @@
 
 {% block content %}
 <!-- ここの内容は継承先が記載する -->
+<h2>写真投稿プラットフォーム</h2>
+
 ここに写真を表示
+
+<!--写真のパスをall_picturesテーブルから取得しpicture_listに代入-->
+{% for item in picture_list %}
+<img src="/image/{{ item.images }}"/>
+{% endfor %}
+
 {% endblock %}

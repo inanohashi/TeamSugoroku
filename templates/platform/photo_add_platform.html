@@ -4,16 +4,39 @@
 {% block  css%}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'CSS/base.css' %}">
+<!-- platform.cssにはまだ何も書いていない -->
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/platform.css' %}">
 {% endblock %}
 
 {% block content %}
 <!-- ここの内容は継承先が記載する -->
 
-<h2>写真投稿フォーム</h2>
-<form class="" action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
+<h2>写真登録用画面</h2>
+
+<!--無視
+<form method="POST">{% csrf_token %}
+
+    <p>画像：<input type='file' id='images' name='image'></p>
+
+    <select id='picture_folderID' name='picture_folderID'>
+
+        {% for item in picture_folderID_list %}
+        <option value="フォルダーID">{{ item.id }}</option>
+        {% endfor %}
+
+    </select>
+
+    <input type='submit' value='作成する'>
+</form> 
+-->
+
+<!--ここでは写真投稿プラットフォームの指定をpicture_folderテーブルのpicture_folder_nameで指定している。
+後でpicture_folder_passwordと紐づいたidを引数として渡すようにし、画像を保存するプラットフォームを事前に指定-->
+
+<form method="POST" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" name="submit">Submit</button>
-</form>
+    <button type="submit">アップロード</button>
+</form> 
+
 
 {% endblock %}

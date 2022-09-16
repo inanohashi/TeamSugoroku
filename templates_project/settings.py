@@ -114,7 +114,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/image/'
 
 #ログイン関連
-LOGIN_URL = '/sign_in/' #ログインが必要なページにアクセスした際のリダイレクト先
+#LOGIN_URL = '/sign_in/' ログインが必要なページに未ログインでアクセスした際のリダイレクト先
 #LOGIN_REDIRECT_URL = '' ログインした後のリダイレクト先
 #LOGOUT_REDIRECT_URL='' ログアウトした後のリダイレクト先　
 
