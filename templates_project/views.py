@@ -8,7 +8,6 @@ class sign_up_Class(TemplateView):
 class sign_in_Class(TemplateView):
     template_name = 'sign_in.html'
 
-    
 
 def errorview(request):
     errormesage = "パスワードが正しくありません"

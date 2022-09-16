@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 #オーナーのテーブルはデフォルトのauth_userテーブルを使います()db.sqlite3の中)
 
+#今度からクラスの名前は大文字にします
+
 class picture_folder(models.Model):
     #外部キー
     ownerID = models.ForeignKey(
