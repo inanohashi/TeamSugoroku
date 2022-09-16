@@ -54,4 +54,3 @@ class picture_comment(models.Model):
     comment = models.TextField()
 
 
-
