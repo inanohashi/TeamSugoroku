@@ -43,3 +43,4 @@ def platform_deleteview(request, pk):
 
 
 
+#変更試し
