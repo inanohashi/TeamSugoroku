@@ -21,26 +21,28 @@ class platform_addClass(CreateView):
     form_class = photo_add_form
     success_url = "/photo_share_app/photo_platform"#写真を追加した後の遷移先
 
-#削除する写真を表示するview
+#削除画面を表示するview
 def platform_deleteview(request, pk):
 
     #postされたら画像を削除
     if request.POST:
-        #delteする写真をdelte_photoに格納
-        delte_photo = all_pictures.objects.get(id=pk)
-        delte_photo.delete()
+        #delete_yes_buttonが押されたとき
+        if "delete_yes_button" in request.POST:
+            #delteする写真をdelte_photoに格納して削除
+            delte_photo = all_pictures.objects.get(id=pk)
+            delte_photo.delete()
 
-        #写真を削除した後の遷移先
-        picture_list = all_pictures.objects.all()
-        return render(request, 'platform/photo_platform.html', {'picture_list':picture_list})
-    
+            #写真を削除した後の遷移先
+            picture_list = all_pictures.objects.all()
+            return render(request, 'platform/photo_platform.html', {'picture_list':picture_list})
+
+        #delete_no_buttonが押されたとき
+        elif "delete_no_button" in request.POST:
+            #写真を削除しないときの遷移先
+            picture_list = all_pictures.objects.all()
+            return render(request, 'platform/photo_platform.html', {'picture_list':picture_list})
+
     #GETの場合の処理
     else:
         photo_path = all_pictures.objects.get(id=pk)
         return render(request, 'platform/photo_delete_platform.html', {'photo_path':photo_path})
-
-
-
-
-
-#変更試し
