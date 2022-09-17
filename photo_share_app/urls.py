@@ -2,16 +2,17 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-
-from .views import platformview, platform_addClass, platform_deleteview
-
+from . import views
+from .views import PlatformAddClass
 
 
 urlpatterns = [
-    path('photo_platform/', platformview, name='photo_platform'),
-    path('photo_add_platform/', platform_addClass.as_view(), name='photo_add_platform'),
+    path('sign_up/', views.sign_up, name = 'sign_up'),
+    path('sign_in/', views.sign_in, name = 'sign_in'),
+    path('photo_platform/', views.platformview, name='photo_platform'),
+    path('photo_add_platform/', PlatformAddClass.as_view(), name='photo_add_platform'),
     #pkにall_picturesテーブルのidを格納
-    path('photo_delete_platform/<int:pk>', platform_deleteview, name='photo_delete_platform'),
+    path('photo_delete_platform/<int:pk>', views.platform_deleteview, name='photo_delete_platform'),
     
 ]\
 + static (settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
