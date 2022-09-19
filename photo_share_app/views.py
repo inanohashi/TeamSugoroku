@@ -71,11 +71,19 @@ def owner_platformview(request):
     folder_list = PictureFolder.objects.all()
     return render(request, 'owner_platform/owner_platform.html', {'folder_list':folder_list})
 
-class OwnerPlatformAddClass(CreateView):
-    template_name = 'owner_platform/owner_add_platform.html'
-    model = PictureFolder #使用するmodel
-    form_class = PlatformAddForm
-    success_url = "/owner_platform"#写真を追加した後の遷移先
+def owner_platform_add(request):
+        #POST
+        if request.method == "POST":
+            form = PlatformAddForm(request.POST)
+
+            if form.is_valid():
+                form.save()
+                folder_list = PictureFolder.objects.all()
+
+                render(request, 'authority/sign_up.html', {'folder_list':folder_list})
+            
+        folder_list = PictureFolder.objects.all()
+        render(request, 'authority/sign_up.html', {'folder_list':folder_list})
 
 def owner_platform_deleteview(request, pk):
 
