@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 #モデルインポート
 from .models import PictureFolder, AllPictures, PictureComment
 #フォームをインポート
-from .forms import PhotoAddForm, CreateUserForm
+from .forms import PhotoAddForm, CreateUserForm, PlatformAddForm
 
 #エラーメッセージ用
 from django.contrib import messages
@@ -22,7 +22,7 @@ def sign_up(request):
 
     if request.user.is_authenticated:
         #TODO オーナー用プラットフォーム画面に飛ばす
-        return redirect('photo_platform')
+        return redirect('owner_platform')
 
     else:
         #djangoの認証ユーザーを作っておく
@@ -44,7 +44,7 @@ def sign_in(request):
     #ログインのキャッシュが残っていたら
     if request.user.is_authenticated:
         #TODO オーナー用プラットフォーム画面に飛ばす
-        return redirect('photo_platform')
+        return redirect('owner_platform')
 
     #ログイン
     else:
@@ -55,7 +55,6 @@ def sign_in(request):
 
             #ユーザの情報を取得する
             user = authenticate(request, username=username, password=password)
-            print(user)
 
             #認証されたか確認する
             if user is not None:
@@ -63,7 +62,7 @@ def sign_in(request):
                 print(user)
 
                 #TODO オーナー用プラットフォーム画面に飛ばす
-                return redirect('photo_platform')
+                return redirect('owner_platform')
             
             else:
                 messages.info(request, 'ユーザーネームまたはパスワードに間違いがあります')
@@ -81,6 +80,45 @@ def logout_user(request):
 def errorview(request):
     errormesage = "パスワードが正しくありません"
     return render(request, 'error.html', {'errormessage':errormesage})
+
+#オーナー用プラットフォーム
+def owner_platformview(request):
+    
+    folder_list = PictureFolder.objects.filter(ownerID = 2)
+    return render(request, 'owner_platform/owner_platform.html', {'folder_list':folder_list})
+
+#オーナー用写真フォルダ（写真プラットフォーム）作成
+def owner_platform_add_photos(request):
+    id = 2
+    form = PlatformAddForm()
+    if request.method =="POST":
+        form =  PlatformAddForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            return redirect('owner_platform')
+
+    context = {'form':form}
+    return render(request, 'owner_platform/owner_add_platform.html', context)
+
+#オーナー用写真フォルダ(写真プラットフォーム) 削除
+def owner_platform_deleteview(request, pk):
+
+    #postされたらファイルを削除
+    if request.POST:
+        #delteするフォルダをdelte_folderに格納
+        delte_folder = PictureFolder.objects.get(id=pk)
+        delte_folder.delete()
+
+        #フォルダを削除した後の遷移先
+        folder_list = PictureFolder.objects.all()
+        return render(request, 'owner_platform/owner_platform.html', {'folder_list':folder_list})
+    
+    #GETの場合の処理
+    else:
+        platform_path = PictureFolder.objects.get(id=pk)
+        return render(request, 'owner_platform/owner_delete_platform.html', {'platform_path':platform_path})
+
 
 
 def home(request):
