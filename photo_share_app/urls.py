@@ -19,8 +19,12 @@ urlpatterns = [
     path('sign_in/', views.sign_in, name = 'sign_in'),
     path('logout/', views.logout_user, name = 'logout'),
 
+    #オーナーログイン後の画面、写真フォルダ一覧、写真フォルダ作成、写真フォルダ削除
+    path('owner_platform/', views.owner_platformview, name='owner_platform'),
+    path('owner_add_platform/', views.owner_platform_add_photos, name='owner_add_platform'),
+    path('owner_delete_platform/<int:pk>', views. owner_platform_deleteview, name='owner_delete_platform'),    
+
     #写真プラットフォーム
-    path('photo_platform/', views.platformview, name='photo_platform'),
     path('photo_platform/', views.platformview, name='photo_platform'),
     path('photo_add_platform/', PlatformAddClass.as_view(), name='photo_add_platform'),
     #pkにall_picturesテーブルのidを格納
