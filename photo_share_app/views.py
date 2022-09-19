@@ -83,8 +83,8 @@ def errorview(request):
 
 #オーナー用プラットフォーム
 def owner_platformview(request):
-    
-    folder_list = PictureFolder.objects.filter(ownerID = 2)
+    #オーナーのIDを引数として渡す
+    folder_list = PictureFolder.objects.filter(ownerID = 1)
     return render(request, 'owner_platform/owner_platform.html', {'folder_list':folder_list})
 
 #オーナー用写真フォルダ（写真プラットフォーム）作成
