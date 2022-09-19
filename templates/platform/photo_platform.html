@@ -1,48 +1,53 @@
 {% extends 'base.html' %}
 
 <!-- CSSを読み込むコード -->
-{% block  css%}
+{% block css%}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'CSS/base.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'CSS/platform.css' %}">
+<style>
+    img {
+        height: 100%;
+        width: 225px;
+
+        object-fit: cover;
+
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 <!-- ここの内容は継承先が記載する -->
 
-<h2>写真投稿プラットフォーム</h2><!--ここに写真ファイル名を記述-->
+<!--画像を追加させるリンク-->
+<h2><a href="/photo_add_platform/">画像を追加</a></h2>
 
-<p>ここに写真を表示</p>
 
-<!--写真のパスをall_picturesテーブルから取得しpicture_listに代入-->
 
-{% for item in picture_list %}
-<!--
-<div class="pictures">
-    <img src="/image/{{ item.images }}" height="200"> 高さのみ固定-->
-<!--
-    <p></p>
+<div class="album py-5 bg-light">
+    <div class="container">
 
-    <a href="/photo_share_app/photo_delete_platform/{{ item.id }}"><!--pkにitem.idを入れて写真削除画面に遷移
-        画像を削除
-    </a> 
-</div>
--->
-<div class="contents">
-    <div class="card text-dark bg-light mb-3" style="width: 15rem;">
-        <img src="/image/{{ item.images }}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <a href="/photo_delete_platform/{{ item.id }}" class="btn btn-primary">画像を削除</a><!--pkにitem.idを入れて写真削除画面に遷移-->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for item in picture_list%}
+            <div class="col">
+                <div class="card shadow-sm">
+
+                    <img src="/image/{{ item.images }}" width="100%" height="225" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="/photo_delete_platform/{{ item.id }}"
+                                    class="btn btn-sm btn-outline-secondary">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
         </div>
     </div>
-</div>
-
-{% endfor %}
-
-
-<!--画像を追加させるリンク-->
-<h2><a href="/photo_add_platform/" >画像を追加</a></h2>
 
 
 
-{% endblock %}
+    {% endblock %}
