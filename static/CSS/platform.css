@@ -1,0 +1,6 @@
+/* これで画像を追加するリンクを右下に固定 */
+.fixedlink {
+    position:fixed;
+    right:20px;
+    bottom:20px;
+}
