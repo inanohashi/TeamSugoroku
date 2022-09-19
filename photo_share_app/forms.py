@@ -14,6 +14,12 @@ class CreateUserForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
+#オーナー用のプラットフォーム追加用のフォーム
+class PlatformAddForm(forms.ModelForm, id):
+    class Meta:
+        model = PictureFolder
+        fields = ('ownerID', 'picture_folder_name', 'piture_folder_password')
+        labels = {'ownerID': 'ownerID','picture_folder_name':'タイトル', 'piture_folder_password':'パスワード'}
 
 
 #写真を追加するフォーム
