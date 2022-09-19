@@ -32,10 +32,7 @@
     <div class="card text-dark bg-light mb-3" style="width: 15rem;">
         <img src="/image/{{ item.images }}" class="card-img-top" alt="...">
         <div class="card-body">
-            <!--画像を削除するリンク-->
-            <a href="/photo_share_app/photo_delete_platform/{{ item.id }}" class="btn btn-primary">画像を削除</a><!--pkにitem.idを入れて写真削除画面に遷移-->
-            <!--画像をダウンロードするリンク-->
-            <a href="/image/{{ item.images }}" download class="btn btn-primary">画像をダウンロード</a>
+            <a href="/photo_delete_platform/{{ item.id }}" class="btn btn-primary">画像を削除</a><!--pkにitem.idを入れて写真削除画面に遷移-->
         </div>
     </div>
 </div>

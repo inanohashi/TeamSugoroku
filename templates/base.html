@@ -52,9 +52,9 @@
 
                     <!-- ボタン -->
                     <div class="text-end">
-                        <button type="button" class="btn btn-primary navbtn">Sign-up</button>
-                        <button type="button" class="btn btn-outline-primary navbtn">Login</button>
-                        <button type="button" class="btn btn-outline-danger navbtn">Logout</button>
+                        <a type="button" class="btn btn-primary navbtn" href = "{% url 'sign_up' %}">Sign up</a>
+                        <a type="button" class="btn btn-outline-primary navbtn" href = "{% url 'sign_in' %}">Sign in</a>
+                        <a type="button" class="btn btn-outline-danger navbtn" href = "{% url 'logout' %}">Logout</a>
                     </div>
                 </div>
                     

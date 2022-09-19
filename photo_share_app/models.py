@@ -1,17 +1,10 @@
 import email
 from django.db import models
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
-
-
-#オーナー用のユーザーテーブル
-class User(models.Model):
-    username = models.CharField(max_length=200)
-    ownerID = models.IntegerField()
-    email =models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
 
 class PictureFolder(models.Model):
     #外部キー
