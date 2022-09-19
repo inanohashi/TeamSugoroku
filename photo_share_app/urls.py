@@ -7,8 +7,16 @@ from .views import PlatformAddClass
 
 
 urlpatterns = [
+
+    #ホーム画面
+    path('home/', views.home, name = 'home'),
+
+    #オーナー用のsign out, sign in, logout
     path('sign_up/', views.sign_up, name = 'sign_up'),
     path('sign_in/', views.sign_in, name = 'sign_in'),
+    path('logout/', views.logout_user, name = 'logout'),
+
+    #写真プラットフォーム
     path('photo_platform/', views.platformview, name='photo_platform'),
     path('photo_add_platform/', PlatformAddClass.as_view(), name='photo_add_platform'),
     #pkにall_picturesテーブルのidを格納
