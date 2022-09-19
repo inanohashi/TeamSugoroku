@@ -1,16 +1,10 @@
 import email
 from django.db import models
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
-
-
-#オーナー用のユーザーテーブル
-class User(models.Model):
-    ownerID = models.IntegerField()
-    email =models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
 
 class PictureFolder(models.Model):
     #外部キー
@@ -40,7 +34,7 @@ class PictureFolder(models.Model):
 class AllPictures(models.Model):
     #外部キー
     picture_folderID = models.ForeignKey(
-        picture_folder,
+        PictureFolder,
         #写真フォルダーが削除されるとフォルダー内の写真も連動して削除
         on_delete=models.CASCADE,
         )
@@ -53,11 +47,10 @@ class AllPictures(models.Model):
 class PictureComment(models.Model):
     #外部キー
     pictureID = models.ForeignKey(
-        all_pictures, 
+        AllPictures, 
         #フォルダー内の写真が削除されると写真コメントも連動して削除
         on_delete=models.CASCADE
         )
 
     comment = models.TextField()
-
 

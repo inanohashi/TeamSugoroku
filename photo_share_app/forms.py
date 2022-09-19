@@ -18,3 +18,11 @@ class CreateUser(forms.ModelForm):
             'email' : 'Email address',
             'password' : 'Password'
         }
+
+
+class PlatformAddForm(forms.ModelForm):
+    class Meta:
+        model = PictureFolder
+        fields = ('picture_folder_name', 'piture_folder_password')
+        labels = {'picture_folder_name':'タイトル', 'piture_folder_password':'パスワード'}
+

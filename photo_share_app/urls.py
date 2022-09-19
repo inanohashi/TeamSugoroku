@@ -3,7 +3,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
-from .views import PlatformAddClass
+from .views import PlatformAddClass,PlatformAddClass
 
 
 urlpatterns = [
@@ -13,6 +13,10 @@ urlpatterns = [
     path('photo_add_platform/', PlatformAddClass.as_view(), name='photo_add_platform'),
     #pkにall_picturesテーブルのidを格納
     path('photo_delete_platform/<int:pk>', views.platform_deleteview, name='photo_delete_platform'),
+    #ownerプラットフォーム
+    path('owner_platform/', views.owner_platformview, name='owner_platform'),
+    path('owner_add_platform/', PlatformAddClass.as_view(), name='owner_add_platform'),
+    path('owner_delete_platform/<int:pk>', views. owner_platform_deleteview, name='owner_delete_platform'),
     
 ]\
 + static (settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
