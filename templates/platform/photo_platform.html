@@ -15,14 +15,34 @@
 <p>ここに写真を表示</p>
 
 <!--写真のパスをall_picturesテーブルから取得しpicture_listに代入-->
+
 {% for item in picture_list %}
+<!--
 <div class="pictures">
-    <img src="/image/{{ item.images }}" height="200"><!--高さのみ固定-->
+    <img src="/image/{{ item.images }}" height="200"> 高さのみ固定-->
+<!--
     <p></p>
-    <a href="/photo_share_app/photo_delete_platform/{{ item.id }}"><!--pkにitem.idを入れて写真削除画面に遷移-->
+
+    <a href="/photo_share_app/photo_delete_platform/{{ item.id }}"><!--pkにitem.idを入れて写真削除画面に遷移
         画像を削除
     </a> 
 </div>
+-->
+<div class="contents">
+    <div class="card text-dark bg-light mb-3" style="width: 15rem;">
+        <img src="/image/{{ item.images }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <a href="/photo_delete_platform/{{ item.id }}" class="btn btn-primary">画像を削除</a><!--pkにitem.idを入れて写真削除画面に遷移-->
+        </div>
+    </div>
+</div>
+
 {% endfor %}
+
+
+<!--画像を追加させるリンク-->
+<h2><a href="/photo_add_platform/" >画像を追加</a></h2>
+
+
 
 {% endblock %}

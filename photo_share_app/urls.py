@@ -2,11 +2,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from . import views
+
 from .views import PlatformAddClass
+from . import views
+
 
 
 urlpatterns = [
+
 
     #ホーム画面
     path('', views.home, name = 'home'),
@@ -17,6 +20,7 @@ urlpatterns = [
     path('logout/', views.logout_user, name = 'logout'),
 
     #写真プラットフォーム
+    path('photo_platform/', views.platformview, name='photo_platform'),
     path('photo_platform/', views.platformview, name='photo_platform'),
     path('photo_add_platform/', PlatformAddClass.as_view(), name='photo_add_platform'),
     #pkにall_picturesテーブルのidを格納
