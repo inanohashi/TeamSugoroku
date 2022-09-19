@@ -9,7 +9,7 @@ from .views import PlatformAddClass
 urlpatterns = [
 
     #ホーム画面
-    path('home/', views.home, name = 'home'),
+    path('', views.home, name = 'home'),
 
     #オーナー用のsign out, sign in, logout
     path('sign_up/', views.sign_up, name = 'sign_up'),
