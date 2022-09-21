@@ -11,7 +11,8 @@ class PictureFolder(models.Model):
     ownerID = models.ForeignKey(
         User, 
         #オーナーが削除されると写真フォルダーも連動して削除
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True
         )
 
     picture_folder_name = models.CharField(
@@ -27,9 +28,9 @@ class PictureFolder(models.Model):
         auto_now_add=True
         )
 
-    #これで管理画面にレコード名をフォルダー名で表示
-    def __str__(self):
-        return self.picture_folder_name
+    # #これで管理画面にレコード名をフォルダー名で表示
+    # def __str__(self):
+    #     return self.picture_folder_name
 
 class AllPictures(models.Model):
     #外部キー

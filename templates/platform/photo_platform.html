@@ -13,6 +13,22 @@
         object-fit: cover;
 
     }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    i {
+        transform: rotate(-90deg);
+        transition: all 0.8s;
+
+    }
+
+    i:hover {
+        transform: rotate(90deg);
+        transition: all 0.8s;
+    }
 </style>
 {% endblock %}
 
@@ -20,8 +36,7 @@
 <!-- ここの内容は継承先が記載する -->
 
 <!--画像を追加させるリンク-->
-<h2><a href="/photo_add_platform/">画像を追加</a></h2>
-
+<h1><a href="/photo_add_platform/"><i class="fa-solid fa-plus"></i></a></h1>
 
 
 <div class="album py-5 bg-light">
@@ -38,6 +53,8 @@
                             <div class="btn-group">
                                 <a href="/photo_delete_platform/{{ item.id }}"
                                     class="btn btn-sm btn-outline-secondary">Delete</a>
+                                <a href="/image/{{ item.images }}" download="/image/{{ item.images }}"
+                                    class="btn btn-sm btn-outline-secondary">Download</a>
                             </div>
                         </div>
                     </div>

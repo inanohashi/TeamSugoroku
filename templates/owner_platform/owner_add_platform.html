@@ -17,7 +17,11 @@
 <form method="POST">
     {% csrf_token %}
     <div class="mb-3">
-        {{form.as_p}}
+        {{form.picture_folder_name}}
+        {{form.piture_folder_password}}
+
+        <!-- <input type="text" name = "name">
+        <input type="text" name="password" > -->
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
