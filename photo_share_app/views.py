@@ -1,21 +1,21 @@
 from email.mime import image
 from importlib.resources import contents
 from urllib import request
+from urllib.parse import uses_relative
 from django.http import HttpResponse
 from django.views.generic import TemplateView, CreateView, FormView
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 #モデルインポート
-from .models import PictureFolder, AllPictures, PictureComment
+from .models import PictureFolder, AllPictures
 #フォームをインポート
-from .forms import PhotoAddForm, CreateUserForm, PlatformAddForm
+from .forms import CreateUserForm
+from django.contrib.auth.models import User
 
 #エラーメッセージ用
 from django.contrib import messages
 #オーナー用のログイン・ログアウト用
 from django.contrib.auth import authenticate, login, logout
-#ログインなしではオーナー用フォームに入れない様にする
-from django.contrib.auth.decorators import login_required
 
 
 #ホームページ
@@ -105,16 +105,17 @@ def sign_in(request):
     #GET
     return render(request, 'authority/sign_in.html')
 
-#ログアウト
+#オーナー専用ページからログアウト
 def logout_user(request):
     request.session.clear()
     logout(request)
 
-    return redirect('sign_in')
+    return redirect('home')
 
+#写真フォルダーからログアウト
 def logout_platform(request):
     request.session.clear()
-    return redirect('')
+    return redirect('home')
     
 #エラーメッセージ
 def errorview(request):
@@ -124,23 +125,28 @@ def errorview(request):
 #オーナー用プラットフォーム
 def owner_platformview(request):
     user_id = request.session['user_id']
+    
     folder_list = PictureFolder.objects.filter(ownerID = user_id)
     return render(request, 'owner_platform/owner_platform.html', {'folder_list':folder_list})
 
 #オーナー用写真フォルダ（写真プラットフォーム）作成
 def owner_platform_add_photos(request):
-    form =  PlatformAddForm()
-
+    user_id = request.session['user_id']
+    
+    
     if request.method =="POST":
-        user_id = request.session['user_id']
-        # form =  PlatformAddForm({**request.POST, 'ownerID':user_id})
-        a = PictureFolder(ownerID = user_id)
-        form = PlatformAddForm(request.POST, instance=a)
-        form.save()
+        
+        #ユーザーから合言葉とパスワードを受け取る
+        object = PictureFolder.objects.create(
+            ownerID = User.objects.get(pk = user_id),
+            picture_folder_name = request.POST.get('name'),
+            piture_folder_password = request.POST.get('password')
+        )
+        
+        object.save()
         return redirect('owner_platform')
 
-    context = {'form':form}
-    return render(request, 'owner_platform/owner_add_platform.html', context)
+    return render(request, 'owner_platform/owner_add_platform.html')
 
 #オーナー用写真フォルダ(写真プラットフォーム) 削除
 def owner_platform_deleteview(request, pk):
@@ -158,7 +164,7 @@ def owner_platform_deleteview(request, pk):
         return render(request, 'owner_platform/owner_delete_platform.html', {'platform_path':platform_path})
 
 
-#写真の一覧を表示するview
+#写真の一覧を表示する
 def platformview(request):
     #写真のパスをAllPicturesテーブルから取得しpicture_listに代入
     picture_folder_id = request.session['folder_id']
@@ -166,13 +172,27 @@ def platformview(request):
     print(picture_list)
     return render(request, 'platform/photo_platform.html', {'picture_list':picture_list})
 
-#写真を追加するclass
-class PlatformAddClass(CreateView):
+#写真を追加する
+def photo_add(request):
+    #session
+    picture_folder_id = request.session['folder_id']
+    if request.method == 'POST':
+        
+        #ユーザーから写真を受け取る
+        object = AllPictures.objects.create(
+            picture_folderID = PictureFolder.objects.get(pk = picture_folder_id),
+            images = request.FILES.get('images')
+        )
+        
+        object.save()
+        return redirect('photo_platform')
+    else:
+        return render(request, 'platform/photo_add_platform.html')
     
-    template_name = 'platform/photo_add_platform.html'
-    model = AllPictures #使用するmodel
-    form_class = PhotoAddForm
-    success_url = "/photo_platform"#写真を追加した後の遷移先
+
+
+
+    
 
 
    

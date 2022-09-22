@@ -17,11 +17,14 @@
 <form method="POST">
     {% csrf_token %}
     <div class="mb-3">
-        {{form.picture_folder_name}}
-        {{form.piture_folder_password}}
-
-        <!-- <input type="text" name = "name">
-        <input type="text" name="password" > -->
+        <p>
+        <label for="name">あいことば</label>
+        <input type="text" name = "name" id = "name">
+        </p>
+        <p>
+        <label for="password">password</label>
+        <input type="text" name="password" >
+        </p>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
