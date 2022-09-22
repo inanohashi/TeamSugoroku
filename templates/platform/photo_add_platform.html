@@ -23,7 +23,10 @@
 後でpicture_folder_passwordと紐づいたidを引数として渡すようにし、画像を保存するプラットフォームを事前に指定-->
 
 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-    {{ form.as_p }}
+    <p>
+    <label for="id_images">画像:</label>
+    <input type="file" name="images" accept="image/*" required="" id="id_images">
+    </p>
     <button type="submit">アップロード</button>
 </form> 
 
