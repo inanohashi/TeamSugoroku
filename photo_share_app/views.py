@@ -1,11 +1,14 @@
 from email.mime import image
 from importlib.resources import contents
+from pickle import TRUE
 from urllib import request
 from urllib.parse import uses_relative
 from django.http import HttpResponse
 from django.views.generic import TemplateView, CreateView, FormView
 from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
+
+from photo_share_app.utils import judge_images
 #モデルインポート
 from .models import PictureFolder, AllPictures
 #フォームをインポート
@@ -32,7 +35,6 @@ def photos_share_login(request):
         queryset = PictureFolder.objects.filter(picture_folder_name = picture_folder_name, piture_folder_password = piture_folder_password)
 
         try:
-            print(queryset[0].pk)
             request.session['folder_id'] = queryset[0].pk
             return redirect('photo_platform')
         
@@ -66,6 +68,8 @@ def sign_up(request):
             if form.is_valid():
                 form.save()
                 return redirect('sign_in')
+            
+            
 
         context = {'form':form}
         return render(request, 'authority/sign_up.html', context)
@@ -75,7 +79,6 @@ def sign_in(request):
 
     #ログインのキャッシュが残っていたら
     if request.user.is_authenticated:
-        #TODO オーナー用プラットフォーム画面に飛ばす
         user_id = request.user.id
         request.session['user_id'] = user_id
         return redirect('owner_platform')
@@ -101,6 +104,7 @@ def sign_in(request):
             
             else:
                 messages.info(request, 'ユーザーネームまたはパスワードに間違いがあります')
+                return redirect('sign_in')
     
     #GET
     return render(request, 'authority/sign_in.html')
@@ -142,7 +146,11 @@ def owner_platform_add_photos(request):
             picture_folder_name = request.POST.get('name'),
             piture_folder_password = request.POST.get('password')
         )
+
         
+            # messages.info(request, 'その合言葉とパスワードは既に使用済みです')
+            # return redirect('owner_add_platform')
+    
         object.save()
         return redirect('owner_platform')
 
@@ -169,7 +177,6 @@ def platformview(request):
     #写真のパスをAllPicturesテーブルから取得しpicture_listに代入
     picture_folder_id = request.session['folder_id']
     picture_list = AllPictures.objects.filter(picture_folderID = picture_folder_id)
-    print(picture_list)
     return render(request, 'platform/photo_platform.html', {'picture_list':picture_list})
 
 #写真を追加する
@@ -178,14 +185,23 @@ def photo_add(request):
     picture_folder_id = request.session['folder_id']
     if request.method == 'POST':
         
-        #ユーザーから写真を受け取る
-        object = AllPictures.objects.create(
-            picture_folderID = PictureFolder.objects.get(pk = picture_folder_id),
-            images = request.FILES.get('images')
-        )
+        judge_result = judge_images(request.FILES.get('images'))
+        #APIキーを環境変数に入れていない場合は下のコメントアウトを外してください
+        # judge_result = True
+
+        if judge_result == True:
+            #ユーザーから写真を受け取る
+            object = AllPictures.objects.create(
+                picture_folderID = PictureFolder.objects.get(pk = picture_folder_id),
+                images = request.FILES.get('images')
+            )
+
+            object.save()
+            return redirect('photo_platform')
+        else:
+            return redirect('photo_add_platform')
+
         
-        object.save()
-        return redirect('photo_platform')
     else:
         return render(request, 'platform/photo_add_platform.html')
     

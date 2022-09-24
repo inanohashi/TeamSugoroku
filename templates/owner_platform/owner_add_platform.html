@@ -18,15 +18,18 @@
     {% csrf_token %}
     <div class="mb-3">
         <p>
-        <label for="name">あいことば</label>
-        <input type="text" name = "name" id = "name">
+            <label for="name">あいことば</label>
+            <input type="text" name="name" id="name">
         </p>
         <p>
-        <label for="password">password</label>
-        <input type="text" name="password" >
+            <label for="password">password</label>
+            <input type="text" name="password">
         </p>
     </div>
     <button type="submit" class="btn btn-primary">Create</button>
+    {% for message in messages %}
+    <p id="messages">{{message}}</p>
+    {% endfor %}
 </form>
 
 
